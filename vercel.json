@@ -1,0 +1,16 @@
+{
+	"functions": {
+		"api/**/*.php": { "runtime": "vercel-php@0.6.0" }
+	},
+	"routes": [
+		{ "handle": "filesystem" },
+		{ "src": "/api/public/css/(.*)", "dest": "/api/public/css/$1" },
+		{ "src": "/api/public/images/(.*)", "dest": "/api/public/images/$1" },
+		{ "src": "/api/public/js/(.*)", "dest": "/api/public/js/$1" },
+		{ "src": "/api/src/views/auth/(.*)", "dest": "/api/src/views/auth/$1" },
+		{
+			"src": "/api/src/views/templates/(.*)",
+			"dest": "/api/src/views/templates/$1"
+		}
+	]
+}
