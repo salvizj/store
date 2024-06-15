@@ -1,21 +1,7 @@
 {
-	"routes": [
-		{ "handle": "filesystem" },
-		{ "src": "/api/public/css/(.*)", "dest": "/api/public/css/$1" },
-		{ "src": "/api/public/images/(.*)", "dest": "/api/public/images/$1" },
-		{ "src": "/api/public/js/(.*)", "dest": "/api/public/js/$1" },
-		{ "src": "/api/src/views/auth/(.*)", "dest": "/api/src/views/auth/$1" },
-		{
-			"src": "/api/src/views/templates/(.*)",
-			"dest": "/api/src/views/templates/$1"
-		},
-		{ "src": "/api/src/config/(.*)", "dest": "/api/src/config/$1" },
-		{
-			"src": "/api/src/controllers/(.*)",
-			"dest": "/api/src/controllers/$1"
-		},
-		{ "src": "/api/src/handlers/(.*)", "dest": "/api/src/handlers/$1" },
-		{ "src": "/api/src/models/(.*)", "dest": "/api/src/models/$1" },
-		{ "src": "/api/src/services/(.*)", "dest": "/api/src/services/$1" }
-	]
+	"functions": {
+		"api/*.php": {
+			"runtime": "vercel-php@0.7.1"
+		}
+	}
 }
