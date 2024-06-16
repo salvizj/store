@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteBase /store-php/
+
+# Route /about to about.php
+RewriteRule ^about$ about.php [L]
+
+# Route /contact to contact.php
+RewriteRule ^contact$ contact.php [L]
+
+# Rewrite root URL to index.php
+RewriteRule ^$ index.php [L]
+# Rewrite for language-based URLs
+RewriteRule ^(en|lv)$ index.php?lang=$1 [L]
