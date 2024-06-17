@@ -1,17 +1,29 @@
-<header class="bg-gray-800 text-white py-4">
-    <div class="container mx-auto flex justify-between items-center">
+<header class="bg-gray-800 text-white py-4 pointer">
+    <div class="container mx-auto flex items-center justify-between">
         <div class="logo">
-            <a href="/store-php/<?php echo $selected_language; ?>"
-                class="text-xl font-bold"><?php echo lang('website_name'); ?></a>
+            <a href="/store-php/" class="text-4xl font-bold"><?php echo lang('website_name'); ?></a>
         </div>
-        <nav>
-            <ul class="flex space-x-4">
-                <li><a href="/store-php/en" class="hover:text-gray-300">EN</a></li>
-                <li><a href="/store-php/lv" class="hover:text-gray-300">LV</a></li>
+        <nav class="flex items-center">
+            <ul class="flex">
+                <li>
+                    <a href="/store-php/" class="hover:text-gray-300 px-4 py-2 block"><?php echo lang('home'); ?></a>
+                </li>
+                <li>
+                    <a href="/store-php/sign-up"
+                        class="hover:text-gray-300 px-4 py-2 block"><?php echo lang('sign_up'); ?></a>
+                </li>
+                <li>
+                    <a href="/store-php/sign-in"
+                        class="hover:text-gray-300 px-4 py-2 block"><?php echo lang('sign_in'); ?></a>
+                </li>
             </ul>
-            <ul class="flex space-x-4">
-                <li><a href="/store-php/<?php echo $selected_language; ?>"
-                        class="hover:text-gray-300"><?php echo lang('home'); ?></a></li>
+            <ul class="flex">
+                <li>
+                    <a class="hover:text-gray-300 px-4 py-2 block" onclick="switchLanguage('en')">EN</a>
+                </li>
+                <li>
+                    <a class="hover:text-gray-300 px-4 py-2 block" onclick="switchLanguage('lv')">LV</a>
+                </li>
             </ul>
         </nav>
     </div>

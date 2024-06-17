@@ -1,17 +1,35 @@
 <?php
 session_start();
 
-$default_language = 'en'; 
+$default_language = 'en';
 
-$url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$segments = explode('/', $url_path);
-$selected_language = isset($segments[2]) ? $segments[2] : $default_language;
-
-if ($selected_language !== 'en' && $selected_language !== 'lv') {
-    $selected_language = $default_language;
+function set_language($lang) {
+    $_SESSION['lang'] = $lang;
+    setcookie('lang', $lang, [
+        'expires' => time() + (86400 * 30), 
+        'path' => '/',
+        'domain' => $_SERVER['HTTP_HOST'],
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'None', 
+    ]);
 }
 
-$_SESSION['lang'] = $selected_language;
+if (isset($_GET['lang']) && ($_GET['lang'] === 'en' || $_GET['lang'] === 'lv')) {
+    $selected_language = $_GET['lang'];
+    set_language($selected_language);
+    echo json_encode(['success' => true]);
+    exit; 
+} else {
+    if (isset($_SESSION['lang'])) {
+        $selected_language = $_SESSION['lang'];
+    } elseif (isset($_COOKIE['lang'])) {
+        $selected_language = $_COOKIE['lang'];
+    } else {
+        $selected_language = $default_language;
+        set_language($selected_language);
+    }
+}
 
 require_once 'src/language/' . $selected_language . '.php';
 
