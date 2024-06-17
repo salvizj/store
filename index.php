@@ -1,39 +1,19 @@
 <?php
-session_start();
-
-$default_language = 'en'; 
-
-$url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$segments = explode('/', $url_path);
-$selected_language = isset($segments[2]) ? $segments[2] : $default_language;
-
-if ($selected_language !== 'en' && $selected_language !== 'lv') {
-    $selected_language = $default_language;
-}
-
-$_SESSION['lang'] = $selected_language;
-
-require_once 'src/language/' . $selected_language . '.php';
-
-global $lang;
-
-function lang($key) {
-    global $lang;
-    return isset($lang[$key]) ? $lang[$key] : $key;
-}
+require_once 'src/config/language.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="<?php echo $selected_language; ?>">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Multi-Language Example</title>
-    <link rel="stylesheet" href="assets/css/styles.css" </head>
+<?php include 'src/views/templates/head.php'; ?>
 
-<body>
+<body class="bg-gray-100">
     <?php include 'src/views/templates/header.php'; ?>
-    <h1><?php echo lang('welcome_message'); ?></h1>
+
+    <div class="container mx-auto mt-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-4"><?php echo lang('welcome_message'); ?></h1>
+    </div>
+
 </body>
 
 </html>

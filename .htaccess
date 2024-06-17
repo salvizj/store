@@ -1,13 +1,15 @@
 RewriteEngine On
 RewriteBase /store-php/
 
-# Route /about to about.php
-RewriteRule ^about$ about.php [L]
+# Redirect / to /en as default language
+RewriteRule ^$ /en [R=302,L]
 
-# Route /contact to contact.php
-RewriteRule ^contact$ contact.php [L]
+# Ignore existing files and directories
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
 
-# Rewrite root URL to index.php
-RewriteRule ^$ index.php [L]
-# Rewrite for language-based URLs
-RewriteRule ^(en|lv)$ index.php?lang=$1 [L]
+# Rewrite URLs to index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Rewrite language URLs (example: /en, /lv)
+RewriteRule ^(en|lv)$ index.php?lang=$1 [QSA,L]
