@@ -1,6 +1,15 @@
 RewriteEngine On
 RewriteBase /store-php/
 
+# Exclude existing files and directories from rewriting
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
-# Rewrite other URLs to index.php
+# Exclude specific file extensions from rewriting (jpg, jpeg, png, gif, bmp, svg)
+RewriteCond %{REQUEST_URI} !\.(jpg|jpeg|png|gif|bmp|svg)$ [NC]
+
+# Rewrite requests to assets, css, js, images, fonts directories
+RewriteRule ^(public|css|js|images|fonts)/(.*)$ - [L,NC]
+
+# Rewrite all other requests to index.php with query string appending
 RewriteRule ^(.*)$ index.php [QSA,L]

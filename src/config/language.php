@@ -3,40 +3,54 @@ session_start();
 
 $default_language = 'en';
 
-function set_language($lang) {
-    $_SESSION['lang'] = $lang;
-    setcookie('lang', $lang, [
-        'expires' => time() + (86400 * 30), 
-        'path' => '/',
-        'domain' => $_SERVER['HTTP_HOST'],
-        'secure' => true,
-        'httponly' => true,
-        'samesite' => 'None', 
-    ]);
-}
-
-if (isset($_GET['lang']) && ($_GET['lang'] === 'en' || $_GET['lang'] === 'lv')) {
-    $selected_language = $_GET['lang'];
-    set_language($selected_language);
-    echo json_encode(['success' => true]);
-    exit; 
-} else {
-    if (isset($_SESSION['lang'])) {
-        $selected_language = $_SESSION['lang'];
-    } elseif (isset($_COOKIE['lang'])) {
-        $selected_language = $_COOKIE['lang'];
+function getLanguage() {
+    if (isset($_COOKIE['lang'])) {
+        return $_COOKIE['lang'];
+    } elseif (isset($_SESSION['lang'])) {
+        return $_SESSION['lang'];
     } else {
-        $selected_language = $default_language;
-        set_language($selected_language);
+        return 'en'; 
     }
 }
 
-require_once 'src/language/' . $selected_language . '.php';
+// Get current language
+$selected_language = getLanguage();
 
-global $lang;
+// Function to set language in session and cookie
+function setLanguage($lang) {
+    $_SESSION['lang'] = $lang;
+    setcookie('lang', $lang, time() + (30 * 24 * 60 * 60), '/'); 
+}
+
+// Handle language switch
+if (isset($_GET['lang'])) {
+    $selected_language = $_GET['lang'];
+    setLanguage($selected_language);
+
+    // Redirect back to the same page after language switch
+    if (isset($_GET['redirect'])) {
+        header('Location: ' . $_GET['redirect']);
+        exit;
+    } else {
+        header('Location: /store-php/'); 
+        exit;
+    }
+}
+
+switch ($selected_language) {
+    case 'en':
+        include __DIR__ . '/../language/en.php';
+        break;
+    case 'lv':
+        include __DIR__ . '/../language/lv.php';
+        break;
+    default:
+        include __DIR__ . '/../language/en.php'; 
+        break;
+}
 
 function lang($key) {
     global $lang;
-    return isset($lang[$key]) ? $lang[$key] : $key;
+    return $lang[$key] ?? $key;
 }
 ?>
