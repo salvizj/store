@@ -1,4 +1,4 @@
-<header class="bg-gray-800 text-white py-4 pointer">
+<div class="bg-gray-800 text-white py-4 pointer">
     <div class="container mx-auto flex items-center justify-between">
         <div class="logo">
             <a href="/store-php/" class="text-4xl font-bold"><?php echo lang('website_name'); ?></a>
@@ -27,4 +27,4 @@
             </ul>
         </nav>
     </div>
-</header>
+</div>

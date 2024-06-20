@@ -11,22 +11,18 @@ if (preg_match('~^/(en|lv)$~', $path, $matches)) {
     exit;
 }
 
-switch ($path) {
-    case '/':
-        $route = '/';
-        break;
-    case '/sign-up':
-        $route = '/sign-up';
-        break;
-    case '/sign-in':
-        $route = '/sign-in';
-        break;
-    default:
-        $route = '/404'; 
-        http_response_code(404);
-        echo '<h1>404 Not Found</h1>';
-        echo '<p>The page you requested could not be found.</p>';
-        exit; 
-}
+$routes = [
+    '/' => 'src/controllers/home.php',
+    '/sign-up' => 'src/controllers/sign-up.php',
+    '/sign-in' => 'src/controllers/sign-in.php'
+];
 
+if (array_key_exists($path, $routes)) {
+    include $routes[$path];
+} else {
+    http_response_code(404);
+    echo '<h1>404 Not Found</h1>';
+    echo '<p>The page you requested could not be found.</p>';
+    exit;
+}
 ?>
